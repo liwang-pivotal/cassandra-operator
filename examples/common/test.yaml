@@ -1,12 +1,16 @@
 apiVersion: stable.instaclustr.com/v1
 kind: CassandraDataCenter
 metadata:
-  name: test-dc
+  name: foo-cassandra
+  labels:
+    app: cassandra
+    chart: cassandra-0.1.0
+    release: foo
 spec:
   replicas: 3
-  sidecarImage: "gcr.io/cassandra-operator/cassandra-sidecar:latest"
   cassandraImage: "gcr.io/cassandra-operator/cassandra:latest"
-  imagePullPolicy: IfNotPresent
+  sidecarImage: "gcr.io/cassandra-operator/cassandra-sidecar:latest"
+  imagePullPolicy: Always
   resources:
     limits:
       memory: 512Mi
@@ -14,7 +18,7 @@ spec:
       memory: 512Mi
   dataVolumeClaim:
     accessModes:
-      - ReadWriteOnce
+    - ReadWriteOnce
     resources:
       requests:
         storage: 100Mi
